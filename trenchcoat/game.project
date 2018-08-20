@@ -1,5 +1,7 @@
 [project]
-title = trenchcoat
+title = Three Kids in a Trenchcoat
+version = 0.1
+dependencies = 
 
 [bootstrap]
 main_collection = /main/main.collectionc
@@ -20,4 +22,11 @@ app_icon = /assets/appicons/appicon.ico
 
 [osx]
 app_icon = /assets/appicons/appicon.icns
+bundle_identifier = org.pigsquad.threekidstrenchcoat
+
+[physics]
+gravity_y = 0.0
+
+[android]
+package = org.pigsquad.threekidstrenchcoat
 
