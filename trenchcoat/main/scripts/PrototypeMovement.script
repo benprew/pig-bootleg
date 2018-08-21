@@ -3,7 +3,7 @@
 -- Totally stolen from the astronaut tutorial https://github.com/defold/tutorial-astronaut/blob/master/README.md
 
 -- local SPEED = 150
-local ACCELERATION = vmath.vector3( 50, 50, 0 )
+-- local ACCELERATION = vmath.vector3( 50, 50, 0 )
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
