@@ -1,0 +1,41 @@
+go.property("move_to", vmath.vector3())
+go.property("move_speed", 2)
+go.property("key", hash(""))
+go.property("url", msg.url())
+go.property("color", vmath.vector4(1, 1, 1, 1))
+go.property("rotation", vmath.quat())
+
+local lookup = require "main.lookup"
+
+local width = tonumber(sys.get_config("display.width"))
+local height = tonumber(sys.get_config("display.height"))
+
+function init(self)
+   print("My name is " .. lookup.get(self.key))
+   print(self.cool and "I'm cool" or "I'm not cool")
+   -- go.animate("#sprite", "tint", go.PLAYBACK_LOOP_PINGPONG, self.color, go.EASING_INOUTCIRC, 2)
+   --go.animate(".", "position", go.PLAYBACK_LOOP_PINGPONG, self.move_to, go.EASING_INOUTCIRC, self.move_speed)
+   -- go.animate(".", "rotation", go.PLAYBACK_LOOP_PINGPONG, self.rotation, go.EASING_INOUTCIRC, 2)
+   msg.post(self.url, "thing_created")
+   self.direction = vmath.vector3(0, 0, 0)
+end
+
+function update(self, dt)
+    local dir = math.random(1, 4)
+
+    if dir == 1 then
+        self.direction.x = 0
+        self.direction.y = self.direction.y + self.move_speed
+    elseif dir == 2 then
+        self.direction.y = 0
+        self.direction.x = self.direction.x + self.move_speed
+    elseif dir == 3 then
+        self.direction.x = 0
+        self.direction.y = self.direction.y - self.move_speed
+    elseif dir == 4 then
+        self.direction.y = 0
+        self.direction.x = self.direction.x - self.move_speed
+    end
+                                
+    go.set_position(go.get_position() + self.direction * dt)
+end
