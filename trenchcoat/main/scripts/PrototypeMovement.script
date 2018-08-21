@@ -1,0 +1,32 @@
+-- This script is for testing movement.
+-- It moves the gameobject according the "forward", "backward", etc inputs
+-- Totally stolen from the astronaut tutorial https://github.com/defold/tutorial-astronaut/blob/master/README.md
+
+local SPEED = 150
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.dir = vmath.vector3()
+	self.current_anim = nil
+end
+
+function update(self, dt)
+	if vmath.length_sqr(self.dir) > 1 then
+		self.dir = vmath.normalize(self.dir)
+	end
+	local currentPosition = go.get_position()
+	go.set_position( currentPosition + self.dir * SPEED * dt)
+	self.dir = vmath.vector3()
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("forward") then
+		self.dir.y = -1
+	elseif action_id == hash("backward") then
+		self.dir.y = 1
+	elseif action_id == hash("left") then
+		self.dir.x = -1
+	elseif action_id == hash("right") then
+		self.dir.x = 1
+	end
+end
