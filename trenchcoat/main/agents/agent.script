@@ -11,31 +11,45 @@ local width = tonumber(sys.get_config("display.width"))
 local height = tonumber(sys.get_config("display.height"))
 
 function init(self)
-   print("My name is " .. lookup.get(self.key))
-   print(self.cool and "I'm cool" or "I'm not cool")
-   -- go.animate("#sprite", "tint", go.PLAYBACK_LOOP_PINGPONG, self.color, go.EASING_INOUTCIRC, 2)
-   --go.animate(".", "position", go.PLAYBACK_LOOP_PINGPONG, self.move_to, go.EASING_INOUTCIRC, self.move_speed)
-   -- go.animate(".", "rotation", go.PLAYBACK_LOOP_PINGPONG, self.rotation, go.EASING_INOUTCIRC, 2)
-   msg.post(self.url, "thing_created")
-   self.direction = vmath.vector3(0, 0, 0)
+    print("My name is " .. lookup.get(self.key))
+    print(self.cool and "I'm cool" or "I'm not cool")
+    msg.post(self.url, "thing_created")
+    self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
+end
+
+-- manhatten distance
+function dist(curr_pos, tgt_pos)
+   return math.abs((curr_pos.x - tgt_pos.x) + (curr_pos.y - tgt_pos.y))
 end
 
 function update(self, dt)
-    local dir = math.random(1, 4)
+   local min_dist = self.move_speed / 2
+   local speed = vmath.vector3(0, 0, 0)
+   local pos = go.get_position()
+   local tgt = self.target
+   local dist = dist(pos, tgt)
+   local dy = pos.y - tgt.y
+   local dx = pos.x - tgt.x
+   if dx == 0 then
+      speed.x = 0
+   elseif dx < 0 then
+      speed.x = math.min(-dx, self.move_speed)
+   else
+      speed.x = -math.min(dx, self.move_speed)
+   end
 
-    if dir == 1 then
-        self.direction.x = 0
-        self.direction.y = self.direction.y + self.move_speed
-    elseif dir == 2 then
-        self.direction.y = 0
-        self.direction.x = self.direction.x + self.move_speed
-    elseif dir == 3 then
-        self.direction.x = 0
-        self.direction.y = self.direction.y - self.move_speed
-    elseif dir == 4 then
-        self.direction.y = 0
-        self.direction.x = self.direction.x - self.move_speed
-    end
-                                
-    go.set_position(go.get_position() + self.direction * dt)
+   if dy == 0 then
+      speed.y = 0
+   elseif dy < 0 then
+      speed.y = math.min(-dy, self.move_speed)
+   else
+      speed.y = -math.min(dy, self.move_speed)
+   end
+
+   if dist < min_dist then
+      self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
+   end
+
+   -- print(self.move_speed, dist, go.get_position(), self.target)
+   go.set_position(pos + speed * dt)
 end
