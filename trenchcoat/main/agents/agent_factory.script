@@ -46,10 +46,6 @@ function final(self)
 	msg.post(".", "release_input_focus")
 end
 
-function update(self, dt)
-	msg.post("@render:", "draw_text", { text = "Up/Down to modify move_speed", position = vmath.vector3(20, 20, 0) } )
-end
-
 function on_message(self, message_id, message, sender)
 	print(message_id, sender)
 end
