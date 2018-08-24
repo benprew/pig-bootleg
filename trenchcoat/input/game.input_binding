@@ -1,10 +1,10 @@
 key_trigger {
   input: KEY_W
-  action: "forward"
+  action: "up"
 }
 key_trigger {
   input: KEY_S
-  action: "backward"
+  action: "down"
 }
 key_trigger {
   input: KEY_A
@@ -13,6 +13,10 @@ key_trigger {
 key_trigger {
   input: KEY_D
   action: "right"
+}
+key_trigger {
+  input: KEY_SPACE
+  action: "pause"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
@@ -48,19 +52,19 @@ gamepad_trigger {
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_LEFT
-  action: "gamepad_lpad_left"
+  action: "left"
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_RIGHT
-  action: "gamepad_lpad_right"
+  action: "right"
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_DOWN
-  action: "gamepad_lpad_down"
+  action: "down"
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_UP
-  action: "gamepad_lpad_up"
+  action: "up"
 }
 gamepad_trigger {
   input: GAMEPAD_RSTICK_LEFT
