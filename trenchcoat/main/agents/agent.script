@@ -10,46 +10,83 @@ local lookup = require "main.lookup"
 local width = tonumber(sys.get_config("display.width"))
 local height = tonumber(sys.get_config("display.height"))
 
+local WALKING = 0
+local CHASING = 1
+local PLAYER_URL = "player"
+
 function init(self)
-    print("My name is " .. lookup.get(self.key))
-    print(self.cool and "I'm cool" or "I'm not cool")
     msg.post(self.url, "thing_created")
-    self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
+    do_mode_walking(self)
 end
 
 -- manhatten distance
 function dist(curr_pos, tgt_pos)
-   return math.abs((curr_pos.x - tgt_pos.x) + (curr_pos.y - tgt_pos.y))
+    return math.abs((curr_pos.x - tgt_pos.x) + (curr_pos.y - tgt_pos.y))
 end
 
 function update(self, dt)
-   local min_dist = self.move_speed / 2
-   local speed = vmath.vector3(0, 0, 0)
-   local pos = go.get_position()
-   local tgt = self.target
-   local dist = dist(pos, tgt)
-   local dy = pos.y - tgt.y
-   local dx = pos.x - tgt.x
-   if dx == 0 then
-      speed.x = 0
-   elseif dx < 0 then
-      speed.x = math.min(-dx, self.move_speed)
-   else
-      speed.x = -math.min(dx, self.move_speed)
-   end
+    local min_dist = self.move_speed / 2
+    local speed = vmath.vector3(0, 0, 0)
+    local pos = go.get_position()
+    local tgt = self.target
+    local dist = dist(pos, tgt)
+    local dy = pos.y - tgt.y
+    local dx = pos.x - tgt.x
 
-   if dy == 0 then
-      speed.y = 0
-   elseif dy < 0 then
-      speed.y = math.min(-dy, self.move_speed)
-   else
-      speed.y = -math.min(dy, self.move_speed)
-   end
+    if dx == 0 then
+        speed.x = 0
+    elseif dx < 0 then
+        speed.x = math.min(-dx, self.move_speed)
+    else
+        speed.x = -math.min(dx, self.move_speed)
+    end
 
-   if dist < min_dist then
-      self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
-   end
+    if dy == 0 then
+        speed.y = 0
+    elseif dy < 0 then
+        speed.y = math.min(-dy, self.move_speed)
+    else
+        speed.y = -math.min(dy, self.move_speed)
+    end
 
-   -- print(self.move_speed, dist, go.get_position(), self.target)
-   go.set_position(pos + speed * dt)
+    if dist < min_dist then -- we finished the end of our walk
+        if self.mode == WALKING then
+            do_mode_walking(self)
+        elseif self.mode == CHASING then
+            do_mode_chasing(self)
+        end
+    end
+
+    go.set_position(pos + speed * dt)
+end
+
+function on_message(self, message_id, message, sender)
+   
+    if message_id == "collision_response" then
+        for i, value in message.group do
+            if value == "player" then
+                -- TODO: Player got caught. GAMEOVER?
+                print("I found the player", sender)
+            elseif value == "stealth_circle" then
+                -- We see the player, chaaaarge
+                print("I found a circle", sender)
+                if message.enter == true then
+                    do_mode_chasing(self)
+                elseif message.enter == false then
+                    do_mode_walking(self)
+                end
+            end
+        end
+    end
+end
+
+function do_mode_walking(self)
+    self.mode = WALKING
+    self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
+    print("I'm moving! to " .. self.target)
+end
+
+function do_mode_chasing(self)
+    self.mode = CHASING
+    self.target = vmath.vector3( go.get_position("player") )
 end
