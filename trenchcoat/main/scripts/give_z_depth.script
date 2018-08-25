@@ -1,0 +1,19 @@
+local MAX_Z = .1
+local MAX_Y = tonumber(sys.get_config("display.height"))
+
+function init(self)
+	-- Add initialization code here
+	-- Remove this function if not needed
+	self.original_z = go.get_position().z
+	
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+	local new_position = go.get_position()
+	-- new_position.z = MAX_Z / ( new_position.y / MAX_Y )
+	new_position.z = MAX_Z / ( new_position.y - MAX_Y ) 
+	--print( go.get_id(), new_position.z )
+	go.set_position(new_position)
+end
