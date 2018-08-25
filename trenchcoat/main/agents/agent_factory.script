@@ -38,12 +38,6 @@ function init(self)
 			url = msg.url() })
 			table.insert(self.things, id)
 		end
-
-		msg.post(".", "acquire_input_focus")
-	end
-
-	function final(self)
-		msg.post(".", "release_input_focus")
 	end
 
 	function on_message(self, message_id, message, sender)
