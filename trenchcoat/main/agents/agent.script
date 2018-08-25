@@ -64,10 +64,7 @@ function on_message(self, message_id, message, sender)
    
     if message_id == "collision_response" then
         for i, value in message.group do
-            if value == "player" then
-                -- TODO: Player got caught. GAMEOVER?
-                print("I found the player", sender)
-            elseif value == "stealth_circle" then
+            if value == "stealth_circle" then
                 -- We see the player, chaaaarge
                 print("I found a circle", sender)
                 if message.enter == true then
@@ -83,7 +80,7 @@ end
 function do_mode_walking(self)
     self.mode = WALKING
     self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
-    print("I'm moving! to " .. self.target)
+    -- print("I'm moving! to " .. self.target)
 end
 
 function do_mode_chasing(self)

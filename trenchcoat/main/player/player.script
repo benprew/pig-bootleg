@@ -45,3 +45,16 @@ function on_input(self, action_id, action)
 		self.dir.y = 1
 	end
 end
+
+function on_message(self, message_id, message, sender)
+	if message_id == "collision_response" then
+		for i, value in message.group do
+			if value == "player" then
+				do_gameover(self)
+			end
+		end
+	end
+end
+
+function do_gameover(self)
+end
