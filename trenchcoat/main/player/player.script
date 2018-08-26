@@ -17,9 +17,6 @@ end
 
 function update(self, dt)
 	self.correction = vmath.vector3()
-	if vmath.length_sqr(self.dir) > 1 then
-		self.dir = vmath.normalize(self.dir)
-	end
 	local p = go.get_position()
 	local q = vmath.vector3()
 
