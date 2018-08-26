@@ -15,6 +15,7 @@ local CHASING = 1
 local PLAYER_URL = "player"
 
 function init(self)
+    self.correction = vmath.vector3()
     msg.post(self.url, "thing_created")
     do_mode_walking(self)
 end
@@ -25,6 +26,7 @@ function dist(curr_pos, tgt_pos)
 end
 
 function update(self, dt)
+    self.correction = vmath.vector3()
     local min_dist = self.move_speed / 2
     local speed = vmath.vector3(0, 0, 0)
     local pos = go.get_position()
@@ -61,20 +63,34 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-   
-    if message_id == "collision_response" then
-        for i, value in message.group do
-            if value == "player" then
-                -- TODO: Player got caught. GAMEOVER?
-                print("I found the player", sender)
-            elseif value == "stealth_circle" then
-                -- We see the player, chaaaarge
-                print("I found a circle", sender)
-                if message.enter == true then
-                    do_mode_chasing(self)
-                elseif message.enter == false then
-                    do_mode_walking(self)
-                end
+    -- print( go.get_id(), message_id )
+    if message_id == hash("collision_response") then
+        if message.group == "stealth_circle" then
+            -- We see the player, chaaaarge
+            print("I found a circle", sender)
+            if message.enter == true then
+                do_mode_chasing(self)
+            elseif message.enter == false then
+                do_mode_walking(self)
+            end
+        end
+    elseif message_id == hash("contact_point_response") then
+        do_mode_walking(self)
+        -- Get the info needed to move out of collision. We might
+        -- get several contact points back and have to calculate
+        -- how to move out of all of them by accumulating a 
+        -- correction vector for this frame:
+        if message.distance > 0 then
+            -- First, project the accumulated correction onto
+            -- the penetration vector
+            local proj = vmath.project(self.correction, message.normal * message.distance)
+            if proj < 1 then
+                -- Only care for projections that does not overshoot.
+                local comp = (message.distance - message.distance * proj) * message.normal
+                -- Apply compensation
+                go.set_position(go.get_position() + comp)
+                -- Accumulate correction done
+                self.correction = self.correction + comp
             end
         end
     end
@@ -83,7 +99,7 @@ end
 function do_mode_walking(self)
     self.mode = WALKING
     self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
-    print("I'm moving! to " .. self.target)
+    -- print("I'm moving! to " .. self.target)
 end
 
 function do_mode_chasing(self)

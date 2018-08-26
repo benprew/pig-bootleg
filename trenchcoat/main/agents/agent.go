@@ -13,6 +13,21 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "give_z_depth"
+  component: "/main/scripts/give_z_depth.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -41,8 +56,8 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.0\n"
   "restitution: 0.0\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "group: \"agent\"\n"
+  "mask: \"player\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"

@@ -1,0 +1,30 @@
+go.property("MIN_SIZE", 100)
+go.property("DECREASE_PER_SEC", 20)
+
+function init(self)
+	-- Add initialization code here
+	-- Remove this function if not needed
+	self.circle_size = self.MIN_SIZE
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+	self.circle_size -= self.DECREASE_PER_SEC * dt
+	-- howto set scale of thingy
+	if self.circle_size < self.MIN_SIZE then
+		self.circle_size = self.MIN_SIZE
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+	print(message_id)
+	if message_id == hash("increase") then
+		-- increase the circle size by a certain amount
+	end
+end
+
+function update_size(self)
+end
