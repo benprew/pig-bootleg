@@ -3,6 +3,11 @@ function init(self)
 	-- Remove this function if not needed
 end
 
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
 function update(self, dt)
 	-- Add update code here
 	-- Remove this function if not needed
@@ -11,9 +16,6 @@ end
 function on_message(self, message_id, message, sender)
 	-- Add message-handling code here
 	-- Remove this function if not needed
-	if message_id == hash("game_over") then
-		do_gameover(self)
-	end
 end
 
 function on_input(self, action_id, action)
@@ -21,5 +23,7 @@ function on_input(self, action_id, action)
 	-- Remove this function if not needed
 end
 
-function do_gameover(self)
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
 end
