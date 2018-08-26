@@ -26,4 +26,5 @@ function on_message(self, message_id, message, sender)
 	end
 end
 
-function update_size
+function update_size(self)
+end
