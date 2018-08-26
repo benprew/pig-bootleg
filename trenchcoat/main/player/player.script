@@ -1,4 +1,4 @@
-local speed = 225
+local speed = 150
 local num_pads = 3
 
 function init(self)
@@ -67,9 +67,10 @@ end
 
 function on_message(self, message_id, message, sender)
 	--print( message_id )
+	print(message.group)
 	if message_id == hash("collision_response") then
 		print("player collision")
-		if message.group == "agent" then
+		if message.group == hash("agent") then
 			do_gameover(self)
 		end
 	elseif message_id == hash("contact_point_response") then

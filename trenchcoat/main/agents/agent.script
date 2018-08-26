@@ -51,6 +51,23 @@ function update(self, dt)
         speed.y = -math.min(dy, self.move_speed)
     end
 
+	local anim = hash("idle")
+	if speed.x > 0 then
+		anim = hash("right")
+	elseif speed.x < 0 then
+		anim = hash("left")
+	elseif speed.y > 0 then
+		anim = hash("up")
+	elseif speed.y < 0 then
+		anim = hash("down")
+	end
+
+	if anim ~= self.current_anim then
+		msg.post("#sprite", "play_animation", { id = anim })
+		self.current_anim = anim
+	end
+
+
     if dist < min_dist then -- we finished the end of our walk
         if self.mode == WALKING then
             do_mode_walking(self)
@@ -78,7 +95,7 @@ function on_message(self, message_id, message, sender)
         do_mode_walking(self)
         -- Get the info needed to move out of collision. We might
         -- get several contact points back and have to calculate
-        -- how to move out of all of them by accumulating a 
+        -- how to move out of all of them by accumulating a
         -- correction vector for this frame:
         if message.distance > 0 then
             -- First, project the accumulated correction onto
