@@ -57,7 +57,22 @@ embedded_instances {
   id: "theater"
   data: "components {\n"
   "  id: \"level\"\n"
-  "  component: \"/main/level.tilemap\"\n"
+  "  component: \"/main/theatre.tilemap\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"hud\"\n"
+  "  component: \"/main/hud.tilemap\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -188,7 +203,7 @@ embedded_instances {
   ""
   position {
     x: 586.0
-    y: 379.0
+    y: 50.0
     z: 0.0
   }
   rotation {
