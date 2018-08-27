@@ -1,4 +1,4 @@
-local speed = 225
+local speed = 150
 local num_pads = 3
 local INGAME_GUISCRIPT = "game_overlay#game_overlay"
 
