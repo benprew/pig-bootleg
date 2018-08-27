@@ -1,7 +1,11 @@
-script: ""
+script: "/main/gui/game_overlay.gui_script"
 fonts {
   name: "Bungee"
   font: "/assets/fonts/Bungee/Bungee.font"
+}
+fonts {
+  name: "Big_Bungee"
+  font: "/assets/fonts/Bungee/Big_Bungee.font"
 }
 background_color {
   x: 0.0
@@ -118,8 +122,8 @@ nodes {
 }
 nodes {
   position {
-    x: -132.0
-    y: 129.0
+    x: -356.0
+    y: 216.0
     z: 0.0
     w: 1.0
   }
@@ -149,8 +153,8 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "You got caught!"
-  font: "Bungee"
+  text: "UNSET TEXT"
+  font: "Big_Bungee"
   id: "text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

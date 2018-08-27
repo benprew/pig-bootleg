@@ -1,18 +1,32 @@
+local circle_node
+local exclaim_node
+
+
 function init(self)
 	-- Add initialization code here
 	-- Remove this function if not needed
+	circle_node = gui.get_node("hole-overlay")
+	exclaim_node = gui.get_node("hole-overlay#text")
+	set_exclaimation_text("")
+	self.original_size = gui.get_size(circle_node)
 end
 
 function update(self, dt)
 	-- Add update code here
 	-- Remove this function if not needed
+	
 end
 
 function on_message(self, message_id, message, sender)
 	-- Add message-handling code here
 	-- Remove this function if not needed
+	print( sender, message_id )
 	if message_id == hash("game_over") then
 		do_gameover(self)
+	elseif message_id == hash("score") then
+		do_score(self)
+	elseif message_id == hash("update_player_position") then
+		gui.set_position(circle_node, message)
 	end
 end
 
@@ -22,4 +36,30 @@ function on_input(self, action_id, action)
 end
 
 function do_gameover(self)
+	local end_size = vmath.vector3(100, 100, 0)
+	set_exclaimation_text("YOU'VE BEEN BUSTED!")
+	circle_node = gui.get_node("hole-overlay")
+	gui.animate(circle_node, "size", end_size, gui.EASING_INOUTEXPO, 5, done_gameover(self))
+end
+
+function done_gameover(self)
+	set_exclaimation_text("")
+end
+
+function do_score(self)
+	set_exclaimation_text("MOVIE PIRATED!")
+	circle_node = gui.get_node("hole-overlay")
+	gui.animate(circle_node, "size", end_size, gui.EASING_OUTQUART, 2, done_gameover(self))
+end
+
+function done_score(self)
+	set_exclaimation_text("")
+	circle_node = gui.get_node("hole-overlay")
+	gui.animate(circle_node, "size", self.original_size, gui.EASING_OUTQUART, 2, done_gameover(self))
+end
+
+function set_exclaimation_text(text)
+	exclaim_node = gui.get_node("hole-overlay#text")
+	print( exclaim_node )
+	gui.set_text(exclaim_node, text)
 end

@@ -1,5 +1,6 @@
 local speed = 225
 local num_pads = 3
+local INGAME_GUISCRIPT = "game_overlay#game_overlay"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -68,8 +69,8 @@ end
 function on_message(self, message_id, message, sender)
 	--print( message_id )
 	if message_id == hash("collision_response") then
-		print("player collision")
-		if message.group == "agent" then
+		--print("player collision", message.group)
+		if message.group == hash("agent") then
 			do_gameover(self)
 		end
 	elseif message_id == hash("contact_point_response") then
@@ -86,4 +87,5 @@ end
 
 function do_gameover(self)
 	print("GAME OVER!")
+	msg.post(INGAME_GUISCRIPT, "game_over")
 end

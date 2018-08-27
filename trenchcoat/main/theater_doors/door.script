@@ -1,6 +1,9 @@
+
+
 function init(self)
 	-- Add initialization code here
 	-- Remove this function if not needed
+	self.scored = false
 end
 
 function final(self)
@@ -16,14 +19,17 @@ end
 function on_message(self, message_id, message, sender)
 	-- Add message-handling code here
 	-- Remove this function if not needed
+	if message_id == hash("collision_response") then
+		if message.group == hash("player") then
+			print( "door:", go.get_id(), "hit by player" )
+		end
+	end
 end
 
-function on_input(self, action_id, action)
-	-- Add input-handling code here
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
+function score(self) 
+	if self.scored then return false
+	else
+		msg.post("game_overlay#game_overlay", "score")
+		self.scored = true
+	end
 end
