@@ -1,5 +1,5 @@
 components {
-  id: "game_overlay"
+  id: "gui"
   component: "/main/gui/game_overlay.gui"
   position {
     x: 0.0
