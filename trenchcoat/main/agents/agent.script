@@ -115,7 +115,7 @@ end
 
 function do_mode_walking(self)
     self.mode = WALKING
-    self.target = vmath.vector3(math.random(0, width), math.random(0, height), 0)
+    self.target = vmath.vector3(math.random(0, width), math.random(100, height), 0)
     -- print("I'm moving! to " .. self.target)
 end
 
