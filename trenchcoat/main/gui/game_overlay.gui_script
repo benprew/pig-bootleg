@@ -1,18 +1,31 @@
+local circle_node
+
 function init(self)
 	-- Add initialization code here
 	-- Remove this function if not needed
+	circle_node = gui.get_node("hole-overlay")
+	set_exclaimation_text("")
+	self.doing_gameover = false
+	self.doing_score = false
+	self.original_size = gui.get_size(circle_node)
 end
 
 function update(self, dt)
 	-- Add update code here
 	-- Remove this function if not needed
+	
 end
 
 function on_message(self, message_id, message, sender)
 	-- Add message-handling code here
 	-- Remove this function if not needed
+	--print( sender, message_id )
 	if message_id == hash("game_over") then
 		do_gameover(self)
+	elseif message_id == hash("score") then
+		do_score(self)
+	elseif message_id == hash("update_player_position") then
+		gui.set_position(circle_node, message.position)
 	end
 end
 
@@ -22,4 +35,45 @@ function on_input(self, action_id, action)
 end
 
 function do_gameover(self)
+	if not self.doing_gameover then
+		self.doing_gameover = true
+		local end_size = vmath.vector3(100, 100, 0)
+		set_exclaimation_text("YOU'VE BEEN BUSTED!")
+		circle_node = gui.get_node("hole-overlay")
+		gui.animate(circle_node, "size", end_size, gui.EASING_INOUTEXPO, 5, 0, done_gameover(self))
+	end
+end
+
+function done_gameover(self)
+	print("done gameover")
+	set_exclaimation_text("")
+	self.doing_gameover = false
+end
+
+function do_score(self)
+	if not self.doing_score then
+		self.doing_score = true
+		set_exclaimation_text("MOVIE PIRATED!")
+		circle_node = gui.get_node("hole-overlay")
+		gui.animate(circle_node, "size", end_size, gui.EASING_OUTQUART, 2, half_score(self))
+	end
+end
+
+function half_score(self)
+	set_exclaimation_text("")
+	circle_node = gui.get_node("hole-overlay")
+	gui.animate(circle_node, "size", self.original_size, gui.EASING_OUTQUART, 2, done_score(self))
+end
+
+function done_score(self)
+	self.doing_score = false
+	set_exclaimation_text("")
+	circle_node = gui.get_node("hole-overlay")
+	gui.animate(circle_node, "size", self.original_size, gui.EASING_OUTQUART, 2)
+end
+
+function set_exclaimation_text(text)
+	local exclaim_node = gui.get_node("text")
+	print( "setting text", exclaim_node )
+	gui.set_text(exclaim_node, text)
 end
