@@ -1,4 +1,6 @@
 local lookup = require "main.lookup"
+local width = tonumber(sys.get_config("display.width"))
+local height = 600
 
 local function modify_speed_of_things(things, delta)
 	for _,id in pairs(things) do
@@ -17,7 +19,7 @@ local function modify_speed_of_things(things, delta)
 end
 
 local function random_position()
-	return vmath.vector3(math.random(1, sys.get_config("display.width")),  math.random(1, sys.get_config("display.height")), 0)
+	return vmath.vector3(math.random(1, width),  math.random(100, height), 0)
 end
 
 function init(self)

@@ -1,13 +1,28 @@
-image: ""
-tile_width: 16
-tile_height: 16
+image: "/assets/images/theaterdoor_spritesheet.png"
+tile_width: 64
+tile_height: 128
 tile_margin: 0
 tile_spacing: 0
 collision: ""
 material_tag: "tile"
-collision_groups: "default"
+collision_groups: "agent"
 animations {
-  id: "anim"
-  start_tile: 1
-  end_tile: 1
+  id: "closed"
+  start_tile: 5
+  end_tile: 5
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 15
+  flip_horizontal: 0
+  flip_vertical: 0
 }
+animations {
+  id: "closedleft"
+  start_tile: 5
+  end_tile: 5
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 15
+  flip_horizontal: 1
+  flip_vertical: 0
+}
+extrude_borders: 0
+inner_padding: 0
