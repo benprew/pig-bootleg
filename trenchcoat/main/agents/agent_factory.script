@@ -22,25 +22,38 @@ local function random_position()
 	return vmath.vector3(math.random(1, width),  math.random(100, height), 0)
 end
 
-function init(self)
-	self.things = {}
-	math.randomseed(os.time())
-	for i=1,10 do
+function add_agents(self, num)
+	for i=1,num do
 		print("creating some things")
 		local name = "Foo" .. i
 		local key = hash(name)
 		lookup.add(key, name)
-		local id = factory.create("#agent_factory", random_position(), nil, {
-			move_to = random_position(),
-			move_speed = math.random(100, 300),
-			key = key,
-			-- color = vmath.vector4(math.random(1, 100) / 100, math.random(1, 100) / 100, math.random(1, 100) / 100, 1),
-			-- rotation = vmath.quat_rotation_z(math.random(1, 360) * 180 / math.pi),
-			url = msg.url() })
-			table.insert(self.things, id)
-		end
+		local id = factory.create(
+			"#agent_factory",
+			random_position(),
+			nil,
+			{
+				move_to = random_position(),
+				move_speed = math.random(100, 300),
+				key = key,
+				url = msg.url()
+			}
+		)
+		table.insert(self.things, id)
 	end
+end
 
-	function on_message(self, message_id, message, sender)
-		print(message_id, sender)
+function init(self)
+	self.things = {}
+	math.randomseed(os.time())
+
+	add_agents(self, 10)
+end
+
+function on_message(self, message_id, message, sender)
+	print("message received!: ", message_id, sender)
+	if message_id == hash("add_agents") then
+		print("adding agents")
+		add_agents(self, message.amount)
 	end
+end
