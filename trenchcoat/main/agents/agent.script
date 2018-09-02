@@ -8,7 +8,7 @@ go.property("rotation", vmath.quat())
 local lookup = require "main.lookup"
 
 local width = tonumber(sys.get_config("display.width"))
-local height = tonumber(sys.get_config("display.height"))
+local height = 625
 
 local WALKING = 0
 local CHASING = 1
@@ -120,7 +120,7 @@ end
 
 function do_mode_walking(self)
     self.mode = WALKING
-    self.target = vmath.vector3(math.random(0, width), math.random(100, 600), 0)
+    self.target = vmath.vector3(math.random(0, width), math.random(90, height), 0)
     -- print("I'm moving! to " .. self.target)
 end
 
