@@ -82,6 +82,11 @@ end
 function on_message(self, message_id, message, sender)
     -- print( go.get_id(), message_id )
     if message_id == hash("collision_response") then
+		if message.group == hash("player") then
+			print("HEY!")
+			msg.post("#hey", "play_sound")
+		end
+
         if message.group == "stealth_circle" then
             -- We see the player, chaaaarge
             print("I found a circle", sender)

@@ -1,0 +1,4 @@
+sound: "/assets/SFX/Voice Lines/hey! (agent).ogg"
+looping: 0
+group: "master"
+gain: 1.0
