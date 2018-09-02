@@ -119,6 +119,7 @@ function on_message(self, message_id, message, sender)
 				"add_score",
 				{ amount = 500, position = go.get_position() }
 			)
+			msg.post("#score", "play_sound")
 			msg.post("factory#agent_factory_script", "add_agents", { amount = 3 })
 		end
 	end
