@@ -10,7 +10,7 @@ end
 function update(self, dt)
 	-- Add update code here
 	-- Remove this function if not needed
-	self.circle_size -= self.DECREASE_PER_SEC * dt
+	self.circle_size = self.circle_size - self.DECREASE_PER_SEC * dt
 	-- howto set scale of thingy
 	if self.circle_size < self.MIN_SIZE then
 		self.circle_size = self.MIN_SIZE
