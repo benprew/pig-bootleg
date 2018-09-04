@@ -8,8 +8,8 @@ material_tag: "tile"
 collision_groups: "agent"
 animations {
   id: "closed"
-  start_tile: 5
-  end_tile: 5
+  start_tile: 1
+  end_tile: 4
   playback: PLAYBACK_LOOP_FORWARD
   fps: 15
   flip_horizontal: 0
