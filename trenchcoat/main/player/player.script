@@ -2,7 +2,7 @@ local speed = 150
 local num_pads = 3
 local INGAME_GUISCRIPT = "game_overlay#gui"
 
-local width = tonumber(sys.get_config("display.width"))
+local width = 1260
 local height = 600
 
 function init(self)
@@ -66,10 +66,12 @@ end
 function bind_to_theater(p, q)
 	if p.x < 16 and q.x < 0 then
 		q.x = 0
-	elseif p.y < 48 and q.y < 0 then
-		q.y = 0
 	elseif p.x > width and q.x > 0 then
 		q.x = 0
+	end
+
+	if p.y < 48 and q.y < 0 then
+		q.y = 0
 	elseif p.y > height and q.y > 0 then
 		q.y = 0
 	end
