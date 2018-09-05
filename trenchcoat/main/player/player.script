@@ -14,6 +14,10 @@ function init(self)
 	self.busted = false
 end
 
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
 function reset_dirs(self)
 	for i=0,(num_pads - 1) do
 		self.dir[i] = vmath.vector3()
