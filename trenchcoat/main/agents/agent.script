@@ -120,7 +120,13 @@ end
 
 function do_mode_walking(self)
     self.mode = WALKING
-    self.target = vmath.vector3(math.random(0, width), math.random(90, height), 0)
+	local pos = go.get_position()
+	local size = 250
+	local minx = math.max(pos.x - size, 0)
+	local maxx = math.min(pos.x + size, width)
+	local miny = math.max(pos.y - size, 90)
+	local maxy = math.min(pos.y + size, height)
+    self.target = vmath.vector3(math.random(minx, maxx), math.random(miny, maxy), 0)
     -- print("I'm moving! to " .. self.target)
 end
 
