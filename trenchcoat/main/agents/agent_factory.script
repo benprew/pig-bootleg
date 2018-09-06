@@ -47,7 +47,7 @@ function init(self)
 	self.things = {}
 	math.randomseed(os.time())
 
-	add_agents(self, 10)
+	add_agents(self, 6)
 end
 
 function on_message(self, message_id, message, sender)
