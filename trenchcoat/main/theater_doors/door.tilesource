@@ -8,8 +8,8 @@ material_tag: "tile"
 collision_groups: "agent"
 animations {
   id: "closed"
-  start_tile: 1
-  end_tile: 4
+  start_tile: 5
+  end_tile: 5
   playback: PLAYBACK_LOOP_FORWARD
   fps: 15
   flip_horizontal: 0
@@ -19,6 +19,24 @@ animations {
   id: "closedleft"
   start_tile: 5
   end_tile: 5
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 15
+  flip_horizontal: 1
+  flip_vertical: 0
+}
+animations {
+  id: "open"
+  start_tile: 1
+  end_tile: 4
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 30
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "openleft"
+  start_tile: 2
+  end_tile: 4
   playback: PLAYBACK_LOOP_FORWARD
   fps: 15
   flip_horizontal: 1
