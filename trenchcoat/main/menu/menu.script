@@ -1,0 +1,35 @@
+function init(self)
+	msg.post("#instructions" , "disable")
+	msg.post(".", "acquire_input_focus")
+	msg.post("#intro", "play_sound")
+	self.nexts = 0
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	if action.released and action_id == hash("next") then
+		if self.nexts == 0 then
+			self.nexts = 1
+			msg.post("#title", "disable")
+			msg.post("#instructions", "enable")
+		elseif self.nexts == 1 then
+			msg.post("main:/loader#loader", "show_level")
+		end
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end

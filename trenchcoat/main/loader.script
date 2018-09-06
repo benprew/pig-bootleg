@@ -1,0 +1,83 @@
+local LEVEL = msg.url("main:/loader#levelproxy")
+local MENU = msg.url("main:/loader#menuproxy")
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	msg.post(MENU, "load")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("show_menu") then
+		self.level_id = message.level_id
+		msg.post(MENU, "load")
+		msg.post(LEVEL, "unload")
+	elseif message_id == hash("show_level") then
+		msg.post(LEVEL, "load")
+		msg.post(MENU, "unload")
+	elseif message_id == hash("proxy_loaded") then
+		print("proxy_loaded", sender)
+		msg.post(sender, "enable")
+	elseif message_id == hash("proxy_unloaded") then
+		print("proxy_unloaded", sender)
+	end
+end
+
+-- function final(self)
+-- 	msg.post(".", "release_input_focus")
+-- end
+
+-- function init(self)
+-- 	print ("loading proxy")
+-- 	msg.post(".", "acquire_input_focus")
+-- 	msg.post("#proxy", "load")
+-- end
+
+-- function final(self)
+-- 	msg.post(".", "release_input_focus")
+-- end
+
+-- function on_message(self, message_id, message, sender)
+-- 	print(message_id, message, sender)
+-- 	if message_id == hash("proxy_loaded") then
+--         -- New world is loaded. Init and enable it.
+--         msg.post(sender, "init")
+--         msg.post(sender, "enable")
+--     end
+
+-- 	if message_id == hash("game_over") then
+-- 		unload_level(self)
+-- 		load_menu(self)
+-- 	end
+-- end
+
+-- function load_menu(self)
+-- 	print("loading menu")
+-- end
+
+-- function unload_level(self)
+-- 	print("reseting game")
+-- 	local loader = "#proxy"
+-- 	msg.post(loader, "disable")
+-- 	msg.post(loader, "final")
+-- 	msg.post(loader, "unload")
+-- end
+
+-- function reset_game(self)
+-- 	print("reseting game")
+-- 	local loader = "#proxy"
+-- 	msg.post(loader, "disable")
+-- 	msg.post(loader, "final")
+-- 	msg.post(loader, "unload")
+-- 	-- store sender for later notification
+-- 	self.unloader = sender
+-- 	-- let unloader know
+-- 	msg.post(self.unloader, "level_ended")
+
+-- 	-- some script tells us to start loading the level
+-- 	msg.post(loader, "load")
+-- 	-- store sender for later notification
+-- 	self.loader = sender
+-- 	-- enable the collection and let the loader know
+-- 	msg.post(sender, "enable")
+-- 	msg.post(self.loader, message_id)
+-- end

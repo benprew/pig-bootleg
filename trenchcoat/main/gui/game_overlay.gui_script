@@ -114,18 +114,16 @@ function do_gameover(self)
 end
 
 function reset(self, node)
-	msg.post("@system:", "reboot")
+	print("in reset")
+	msg.post("main:/loader#loader", "show_menu")
 end
 
 function done_gameover(self)
-	print("done gameover")
+	print("in done gameover")
 	local end_size = vmath.vector3(100, 100, 0)
+	-- fake animation to delay restarting the system
 	gui.animate(gui.get_node("hole-overlay"), 'size', end_size, gui.EASING_INOUTEXPO, 1.0, 1.0, reset)
 	self.doing_gameover = false
-	-- unload the level
-	-- msg.post("/loader#proxy", "disable")
-	-- msg.post("/loader#proxy", "final")
-	-- msg.post("/loader#proxy", "unload")
 end
 
 
