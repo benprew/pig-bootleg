@@ -1,4 +1,4 @@
-image: "/assets/images/carpet0-Sheet.png"
+image: "/assets/SPRITES/carpet0-Sheet.png"
 tile_width: 64
 tile_height: 32
 tile_margin: 0

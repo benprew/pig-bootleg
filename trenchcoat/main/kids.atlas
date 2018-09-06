@@ -1,5 +1,5 @@
 images {
-  image: "/assets/kids.png"
+  image: "/assets/SPRITES/kids.png"
 }
 margin: 0
 extrude_borders: 0
